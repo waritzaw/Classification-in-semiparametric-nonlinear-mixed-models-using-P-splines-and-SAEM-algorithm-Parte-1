@@ -1,0 +1,57 @@
+<DATAFILE>
+
+[FILEINFO]
+file='datasimul.csv'
+delimiter = comma
+header = {EMPTY, id, time, y, grupo}
+
+[CONTENT]
+id = {use=identifier}
+time = {use=time}
+y = {use=observation, name=y, type=continuous}
+grupo = {use=covariate, type=categorical}
+
+<MODEL>
+
+[INDIVIDUAL]
+input = {a_pop, omega_a, b_pop, omega_b, c_pop, omega_c}
+
+DEFINITION:
+a = {distribution=normal, typical=a_pop, sd=omega_a}
+b = {distribution=normal, typical=b_pop, sd=omega_b}
+c = {distribution=normal, typical=c_pop, sd=omega_c}
+
+[LONGITUDINAL]
+input = {a_}
+
+file = 'NLME.txt'
+
+DEFINITION:
+y = {distribution=normal, prediction=E, errorModel=constant(a_)}
+
+<FIT>
+data = y
+model = y
+
+<PARAMETER>
+a_ = {value=1, method=MLE}
+a_pop = {value=4, method=MLE}
+b_pop = {value=15, method=MLE}
+c_pop = {value=7, method=MLE}
+omega_a = {value=1, method=MLE}
+omega_b = {value=1, method=MLE}
+omega_c = {value=1, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = {conditionalMean, conditionalMode })
+fim(method = Linearization)
+logLikelihood(method = Linearization)
+plotResult(method = {indfits, parameterdistribution, covariancemodeldiagnosis, covariatemodeldiagnosis, obspred, vpc, residualsscatter, residualsdistribution, randomeffects, saemresults })
+
+[SETTINGS]
+GLOBAL:
+exportpath = 'NLME'
+
