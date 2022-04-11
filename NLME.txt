@@ -1,0 +1,10 @@
+DESCRIPTION: NLME model
+
+[LONGITUDINAL]
+input = { a, b, c}
+
+EQUATION:
+E = a/(1+exp(-(t-b)/c))
+
+OUTPUT:
+output = E
