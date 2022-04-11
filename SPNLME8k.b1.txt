@@ -1,0 +1,22 @@
+DESCRIPTION: NLME + Bspline model with 8 knots
+
+[LONGITUDINAL]
+input = {a, b, c, Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8, Z9, b1, b2, b3, b4, b5, b6, b7, b8, b9}
+Z1    = {use=regressor}
+Z2    = {use=regressor}
+Z3    = {use=regressor}
+Z4    = {use=regressor}
+Z5    = {use=regressor}
+Z6    = {use=regressor}
+Z7    = {use=regressor}
+Z8    = {use=regressor}
+Z9    = {use=regressor}
+
+
+EQUATION:
+E1= a/(1+exp(-(t-b)/c))
+E2= Z1*b1+Z2*b2+Z3*b3+Z4*b4+Z5*b5+Z6*b6+Z7*b7+Z8*b8+Z9*b9
+E= E1 + E2
+
+OUTPUT:
+output = E
