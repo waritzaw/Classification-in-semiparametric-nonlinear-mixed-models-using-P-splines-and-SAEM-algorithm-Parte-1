@@ -1,0 +1,93 @@
+<DATAFILE>
+
+[FILEINFO]
+file='datasp8k.csv'
+delimiter = comma
+header = {id, time, y, grupo, Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8, Z9}
+
+[CONTENT]
+id = {use=identifier}
+time = {use=time}
+y = {use=observation, name=y, type=continuous}
+grupo = {use=covariate, type=categorical}
+Z1 = {use=regressor}
+Z2 = {use=regressor}
+Z3 = {use=regressor}
+Z4 = {use=regressor}
+Z5 = {use=regressor}
+Z6 = {use=regressor}
+Z7 = {use=regressor}
+Z8 = {use=regressor}
+Z9 = {use=regressor}
+
+<MODEL>
+
+[INDIVIDUAL]
+input = {a_pop, omega_a, b_pop, omega_b, b1_pop, omega_b1, b2_pop, omega_b2, b3_pop, omega_b3, b4_pop, omega_b4, b5_pop, omega_b5, b6_pop, omega_b6, b7_pop, omega_b7, b8_pop, omega_b8, b9_pop, omega_b9, c_pop, omega_c}
+
+DEFINITION:
+a = {distribution=normal, typical=a_pop, sd=omega_a}
+b = {distribution=normal, typical=b_pop, sd=omega_b}
+b1 = {distribution=normal, typical=b1_pop, sd=omega_b1}
+b2 = {distribution=normal, typical=b2_pop, sd=omega_b2}
+b3 = {distribution=normal, typical=b3_pop, sd=omega_b3}
+b4 = {distribution=normal, typical=b4_pop, sd=omega_b4}
+b5 = {distribution=normal, typical=b5_pop, sd=omega_b5}
+b6 = {distribution=normal, typical=b6_pop, sd=omega_b6}
+b7 = {distribution=normal, typical=b7_pop, sd=omega_b7}
+b8 = {distribution=normal, typical=b8_pop, sd=omega_b8}
+b9 = {distribution=normal, typical=b9_pop, sd=omega_b9}
+c = {distribution=normal, typical=c_pop, sd=omega_c}
+
+[LONGITUDINAL]
+input = {a_}
+
+file = 'SPNLME8k.b1.txt'
+
+DEFINITION:
+y = {distribution=normal, prediction=E, errorModel=constant(a_)}
+
+<FIT>
+data = y
+model = y
+
+<PARAMETER>
+a_ = {value=1, method=MLE}
+a_pop = {value=4, method=MLE}
+b1_pop = {value=1, method=MLE}
+b2_pop = {value=1, method=MLE}
+b3_pop = {value=1, method=MLE}
+b4_pop = {value=1, method=MLE}
+b5_pop = {value=1, method=MLE}
+b6_pop = {value=1, method=MLE}
+b7_pop = {value=1, method=MLE}
+b8_pop = {value=1, method=MLE}
+b9_pop = {value=1, method=MLE}
+b_pop = {value=15, method=MLE}
+c_pop = {value=7, method=MLE}
+omega_a = {value=1, method=MLE}
+omega_b = {value=1, method=MLE}
+omega_b1 = {value=1, method=MLE}
+omega_b2 = {value=1, method=MLE}
+omega_b3 = {value=1, method=MLE}
+omega_b4 = {value=1, method=MLE}
+omega_b5 = {value=1, method=MLE}
+omega_b6 = {value=1, method=MLE}
+omega_b7 = {value=1, method=MLE}
+omega_b8 = {value=1, method=MLE}
+omega_b9 = {value=1, method=MLE}
+omega_c = {value=1, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = {conditionalMean, conditionalMode })
+fim(method = Linearization)
+logLikelihood(method = Linearization)
+plotResult(method = {indfits, parameterdistribution, covariancemodeldiagnosis, covariatemodeldiagnosis, obspred, vpc, residualsscatter, residualsdistribution, randomeffects, saemresults })
+
+[SETTINGS]
+GLOBAL:
+exportpath = 'SPNLME8k.b1'
+
