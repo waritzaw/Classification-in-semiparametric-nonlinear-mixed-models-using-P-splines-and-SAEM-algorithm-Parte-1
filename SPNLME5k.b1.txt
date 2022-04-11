@@ -1,0 +1,19 @@
+DESCRIPTION: NLME + Bspline Model with 5 knots
+
+[LONGITUDINAL]
+input = {a, b, c, Z1, Z2, Z3, Z4, Z5, Z6, b1, b2, b3, b4, b5, b6}
+Z1    = {use=regressor}
+Z2    = {use=regressor}
+Z3    = {use=regressor}
+Z4    = {use=regressor}
+Z5    = {use=regressor}
+Z6    = {use=regressor}
+
+
+EQUATION:
+E1= a/(1+exp(-(t-b)/c))
+E2= Z1*b1+Z2*b2+Z3*b3+Z4*b4+Z5*b5+Z6*b6
+E= E1 + E2
+
+OUTPUT:
+output = E
