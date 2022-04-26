@@ -1,0 +1,235 @@
+Nonlinear mixed-effects model fit by the SAEM algorithm
+-----------------------------------
+----          Data             ----
+-----------------------------------
+Object of class SaemixData
+    longitudinal data for use with the SAEM algorithm
+Dataset dataEN12.full 
+    Structured data: y ~ time + Z1 + Z2 + Z3 + Z4 + Z5 + Z6 + Z7 + Z8 + Z9 + Z10 + Z11 + Z12 + Z13 | id 
+    X variable for graphs: time (days) 
+Dataset characteristics:
+    number of subjects:     124 
+    number of observations: 261 
+    average/min/max nb obs: 2.10  /  1  /  4 
+First 10 lines of data:
+   id time           Z1          Z2          Z3          Z4          Z5          Z6           Z7
+1   1   29 -0.087777606  0.12808933  0.08065954 -0.04914058 -0.17707864  0.18133312  0.016575786
+2   2   16 -0.049370087  0.09869544  0.14231585  0.16717384  0.15672176 -0.09933825  0.002584083
+3   2   37  0.036762134 -0.08313499 -0.05389112  0.08495598  0.16950523 -0.02793330  0.207929417
+4   2   39 -0.070205927 -0.01090494 -0.11681854 -0.03349530  0.15671564 -0.14097299  0.123850687
+5   3   11 -0.007433728  0.00570383 -0.01193495 -0.04784840 -0.09891367  0.15653113  0.207842475
+6   3   16 -0.049370087  0.09869544  0.14231585  0.16717384  0.15672176 -0.09933825  0.002584083
+7   3   34  0.112392956 -0.08910826  0.05886592  0.16604483  0.08125898  0.13607157  0.236183021
+8   3   50  0.044279470 -0.05601924  0.07272941  0.10275727 -0.12525947  0.13171949 -0.193125800
+9   4   27 -0.091106110  0.10174433  0.01077485 -0.11997520 -0.18081663  0.09694443 -0.096931621
+10  4   48  0.123423163 -0.01235115  0.14682941  0.02233483 -0.18898332  0.02805394 -0.241549504
+            Z8           Z9         Z10          Z11         Z12        Z13        y mdv cens
+1  -0.20677341  0.288594883  0.12304201 -0.171146226  0.32824667  0.1481339 4.327342   0    0
+2   0.12769327 -0.238386294 -0.29152143 -0.253579411  0.11498219 -0.1143629 2.247746   0    0
+3   0.20264908  0.101179556  0.31864068  0.122127298  0.25703672  0.2552677 4.326775   0    0
+4   0.25769887 -0.005259152  0.30378783  0.190694083  0.21830840  0.2735649 4.454011   0    0
+5   0.23801422 -0.233207634 -0.18365627 -0.086081668 -0.05464104 -0.2326107 1.977380   0    0
+6   0.12769327 -0.238386294 -0.29152143 -0.253579411  0.11498219 -0.1143629 3.153281   0    0
+7   0.05891882  0.231176911  0.28953951  0.009467398  0.30078092  0.2211944 4.761897   0    0
+8  -0.13657854 -0.263465740 -0.11563568  0.325455904 -0.06961070  0.3058589 4.641633   0    0
+9  -0.25982573  0.245516969  0.03292549 -0.228850182  0.32184865  0.1138093 4.311831   0    0
+10 -0.02845087 -0.293879472 -0.02361172  0.339006380 -0.01402077  0.3088348 4.577584   0    0
+   occ ytype
+1    1     1
+2    1     1
+3    1     1
+4    1     1
+5    1     1
+6    1     1
+7    1     1
+8    1     1
+9    1     1
+10   1     1
+-----------------------------------
+----          Model            ----
+-----------------------------------
+Nonlinear mixed-effects model
+  Model function:  SPNLME model knots = 12
+  Model type:  structural
+function(psi, id, x){ 
+  RES <- x
+  
+  tim<-RES[,1]
+  a<-psi[id,1]
+  b<-psi[id,2]
+  c<-psi[id,3]
+  ypred<-a/(1+exp(-(tim-b)/c))
+  
+  return(ypred)
+  
+  ##
+  
+  b1<- psi[id, 4]
+  b2<- psi[id, 5]
+  b3<- psi[id, 6]
+  b4<- psi[id, 7]
+  b5<- psi[id, 8]
+  b6<- psi[id, 9]
+  b7<- psi[id, 10]
+  b8<- psi[id, 11]
+  b9<- psi[id, 12]
+  b10<-psi[id, 13]
+  b11<-psi[id, 14]
+  b12<-psi[id,15]
+  b13<-psi[id,16]
+  
+  yspline <- RES[,2]*b1 + RES[,3]*b2 + RES[,4]*b3 + RES[,5]*b4 + RES[,6]*b5 + 
+    RES[,7]*b6 + RES[,8]*b7 + RES[,9]*b8 + RES[,10]*b9 + RES[,11]*b10 + 
+    RES[,12]*b11 + RES[,13]*b12 + RES[,14]*b13
+  resp <- ypred + yspline
+  
+  return(resp)
+}
+<bytecode: 0x7fc5313626f0>
+  Nb of parameters: 16 
+      parameter names:  a b c b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13 
+      distribution:
+      Parameter Distribution Estimated
+ [1,] a         normal       Estimated
+ [2,] b         normal       Estimated
+ [3,] c         normal       Estimated
+ [4,] b1        normal       Estimated
+ [5,] b2        normal       Estimated
+ [6,] b3        normal       Estimated
+ [7,] b4        normal       Estimated
+ [8,] b5        normal       Estimated
+ [9,] b6        normal       Estimated
+[10,] b7        normal       Estimated
+[11,] b8        normal       Estimated
+[12,] b9        normal       Estimated
+[13,] b10       normal       Estimated
+[14,] b11       normal       Estimated
+[15,] b12       normal       Estimated
+[16,] b13       normal       Estimated
+  Variance-covariance matrix:
+    a b c b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13
+a   1 0 0  0  0  0  0  0  0  0  0  0   0   0   0   0
+b   0 1 0  0  0  0  0  0  0  0  0  0   0   0   0   0
+c   0 0 1  0  0  0  0  0  0  0  0  0   0   0   0   0
+b1  0 0 0  1  0  0  0  0  0  0  0  0   0   0   0   0
+b2  0 0 0  0  1  0  0  0  0  0  0  0   0   0   0   0
+b3  0 0 0  0  0  1  0  0  0  0  0  0   0   0   0   0
+b4  0 0 0  0  0  0  1  0  0  0  0  0   0   0   0   0
+b5  0 0 0  0  0  0  0  1  0  0  0  0   0   0   0   0
+b6  0 0 0  0  0  0  0  0  1  0  0  0   0   0   0   0
+b7  0 0 0  0  0  0  0  0  0  1  0  0   0   0   0   0
+b8  0 0 0  0  0  0  0  0  0  0  1  0   0   0   0   0
+b9  0 0 0  0  0  0  0  0  0  0  0  1   0   0   0   0
+b10 0 0 0  0  0  0  0  0  0  0  0  0   1   0   0   0
+b11 0 0 0  0  0  0  0  0  0  0  0  0   0   1   0   0
+b12 0 0 0  0  0  0  0  0  0  0  0  0   0   0   1   0
+b13 0 0 0  0  0  0  0  0  0  0  0  0   0   0   0   1
+  Error model: constant , initial values: a.1=1 
+    No covariate in the model.
+    Initial values
+                    a        b      c b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 b11 b12 b13
+Pop.CondInit 4.787056 16.30705 7.0731  0  0  0  0  0  0  0  0  0   0   0   0   0
+-----------------------------------
+----    Key algorithm options  ----
+-----------------------------------
+    Estimation of log-likelihood by importance sampling
+    Number of iterations:  K1=500, K2=100 
+    Number of chains:  5 
+    Seed:  139546 
+    Number of MCMC iterations for IS:  5000 
+    Simulations:
+        nb of simulated datasets used for npde:  1000 
+        nb of simulated datasets used for VPC:  100 
+    Input/output
+        save the results to a file:  TRUE 
+        save the graphs to files:  FALSE 
+        directory where results should be saved:  newdir 
+----------------------------------------------------
+----                  Results                   ----
+----------------------------------------------------
+-----------------  Fixed effects  ------------------
+----------------------------------------------------
+      Parameter Estimate
+ [1,] a          4.773  
+ [2,] b         16.420  
+ [3,] c          6.897  
+ [4,] b1        -0.723  
+ [5,] b2        -0.048  
+ [6,] b3         0.022  
+ [7,] b4         0.544  
+ [8,] b5         0.226  
+ [9,] b6         0.157  
+[10,] b7        -0.277  
+[11,] b8        -0.742  
+[12,] b9         1.336  
+[13,] b10        2.219  
+[14,] b11        0.401  
+[15,] b12       -0.601  
+[16,] b13        0.343  
+[17,] a.1        0.161  
+----------------------------------------------------
+-----------  Variance of random effects  -----------
+----------------------------------------------------
+    Parameter  Estimate
+a   omega2.a   0.0017  
+b   omega2.b   7.6385  
+c   omega2.c   3.5727  
+b1  omega2.b1  0.4640  
+b2  omega2.b2  0.0232  
+b3  omega2.b3  0.1297  
+b4  omega2.b4  0.1702  
+b5  omega2.b5  0.2227  
+b6  omega2.b6  0.0408  
+b7  omega2.b7  0.5148  
+b8  omega2.b8  1.1722  
+b9  omega2.b9  0.2994  
+b10 omega2.b10 1.4701  
+b11 omega2.b11 0.0500  
+b12 omega2.b12 0.3190  
+b13 omega2.b13 0.2886  
+----------------------------------------------------
+------  Correlation matrix of random effects  ------
+----------------------------------------------------
+           omega2.a omega2.b omega2.c omega2.b1 omega2.b2 omega2.b3 omega2.b4 omega2.b5
+omega2.a   1        0        0        0         0         0         0         0        
+omega2.b   0        1        0        0         0         0         0         0        
+omega2.c   0        0        1        0         0         0         0         0        
+omega2.b1  0        0        0        1         0         0         0         0        
+omega2.b2  0        0        0        0         1         0         0         0        
+omega2.b3  0        0        0        0         0         1         0         0        
+omega2.b4  0        0        0        0         0         0         1         0        
+omega2.b5  0        0        0        0         0         0         0         1        
+omega2.b6  0        0        0        0         0         0         0         0        
+omega2.b7  0        0        0        0         0         0         0         0        
+omega2.b8  0        0        0        0         0         0         0         0        
+omega2.b9  0        0        0        0         0         0         0         0        
+omega2.b10 0        0        0        0         0         0         0         0        
+omega2.b11 0        0        0        0         0         0         0         0        
+omega2.b12 0        0        0        0         0         0         0         0        
+omega2.b13 0        0        0        0         0         0         0         0        
+           omega2.b6 omega2.b7 omega2.b8 omega2.b9 omega2.b10 omega2.b11 omega2.b12 omega2.b13
+omega2.a   0         0         0         0         0          0          0          0         
+omega2.b   0         0         0         0         0          0          0          0         
+omega2.c   0         0         0         0         0          0          0          0         
+omega2.b1  0         0         0         0         0          0          0          0         
+omega2.b2  0         0         0         0         0          0          0          0         
+omega2.b3  0         0         0         0         0          0          0          0         
+omega2.b4  0         0         0         0         0          0          0          0         
+omega2.b5  0         0         0         0         0          0          0          0         
+omega2.b6  1         0         0         0         0          0          0          0         
+omega2.b7  0         1         0         0         0          0          0          0         
+omega2.b8  0         0         1         0         0          0          0          0         
+omega2.b9  0         0         0         1         0          0          0          0         
+omega2.b10 0         0         0         0         1          0          0          0         
+omega2.b11 0         0         0         0         0          1          0          0         
+omega2.b12 0         0         0         0         0          0          1          0         
+omega2.b13 0         0         0         0         0          0          0          1         
+----------------------------------------------------
+---------------  Statistical criteria  -------------
+----------------------------------------------------
+
+Likelihood computed by importance sampling
+      -2LL= 66.59457 
+      AIC = 132.5946 
+      BIC = 225.6639 
+----------------------------------------------------
